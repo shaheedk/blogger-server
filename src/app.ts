@@ -1,19 +1,23 @@
 import express, { Request, Response } from 'express';
 import 'dotenv/config'
+import cors from 'cors'
+
 const app = express();
 const PORT = process.env.PORT || 4000; 
 
-// Middleware (optional, but commonly used for parsing JSON bodies)
+// Middlewares 
 app.use(express.json());
+app.use(cors())
 
-// Define a basic route
+
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello dddd'); // Handles GET requests to the root path.
+    res.send('Hello dd'); 
 });
 
 
 
 // Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`); // Logs a message when the server starts listening.
+    console.log(`Server is running on http://localhost:${PORT}`); 
 });
+export default app;
