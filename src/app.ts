@@ -1,14 +1,19 @@
 import express, { Request, Response } from 'express';
 import 'dotenv/config'
 import cors from 'cors'
+import { connectDB } from './configs/db';
+
 
 const app = express();
 const PORT = process.env.PORT || 4000; 
+
+
 
 // Middlewares 
 app.use(express.json());
 app.use(cors())
 
+ connectDB()
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello dd'); 
