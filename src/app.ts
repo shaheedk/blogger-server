@@ -2,6 +2,7 @@ import express, { Request, Response } from 'express';
 import 'dotenv/config'
 import cors from 'cors'
 import { connectDB } from './configs/db';
+import adminRouter from './routes/AdminRoutes';
 
 
 const app = express();
@@ -15,10 +16,12 @@ app.use(cors())
 
  connectDB()
 
+//  Routes 
 app.get('/', (req: Request, res: Response) => {
-    res.send('Hello dd'); 
+    res.send('Api working'); 
 });
 
+app.use('/api/admin',adminRouter)
 
 
 // Start the server
