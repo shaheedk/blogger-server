@@ -11,7 +11,7 @@ interface IComment extends Document {
 
 const commentSchema: Schema<IComment> = new Schema(
   {
-    blog: { type: Schema.Types.ObjectId, ref: 'blog', required: true },
+    blog: { type: Schema.Types.ObjectId, ref: 'Blog', required: true },
     name: { type: String, required: true },
     content: { type: String, required: true },
     isApproved: { type: Boolean, default: false },

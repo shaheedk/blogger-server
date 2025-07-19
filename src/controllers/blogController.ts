@@ -66,6 +66,9 @@ export const getAllBlogs = async (
 ): Promise<void> => {
   try {
     const blogs = await Blog.find({ isPublished: true });
+    if(!blogs){
+      res.json({success:false,message:"blogs are not available "})
+    }
     res.json({ success: true, blogs });
   } catch (error) {
     if (error instanceof Error) {
@@ -114,6 +117,10 @@ export const deleteBlogById = async (
   try {
     const { id } = req.body;
     const blog = await Blog.findByIdAndDelete(id);
+
+
+    // Delete all comments associated with the blog 
+    await Comment.deleteMany({blog:id})
 
     res.json({ success: true, message: "Blog deleted successfully" });
   } catch (error) {
@@ -188,3 +195,12 @@ export const getBlogComments = async (req: Request, res: Response) =>{
 }
 
 
+
+export const generateContent=async()=>{
+  try {
+    const {prompt}=req.body;
+    await main(`${prompt} Generate a blog content for this topix in simple text format`)
+  } catch (error) {
+    
+  }
+}
