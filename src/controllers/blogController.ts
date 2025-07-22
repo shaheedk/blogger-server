@@ -3,6 +3,7 @@ import fs from "fs";
 import imagekit from "../configs/imageKit";
 import Blog from "../models/Blog";
 import Comment from "../models/Comment";
+import main from "../configs/gemini";
 
 export const addBlog = async (req: Request, res: Response): Promise<void> => {
   try {
@@ -196,11 +197,19 @@ export const getBlogComments = async (req: Request, res: Response) =>{
 
 
 
-export const generateContent=async()=>{
+export const generateContent=async(req:Request,res:Response)=>{
   try {
     const {prompt}=req.body;
-    await main(`${prompt} Generate a blog content for this topix in simple text format`)
+  const content=await main(`${prompt} Generate a blog content for this topix in simple text format`)
+  res.json({success:true,content})
   } catch (error) {
-    
+    if (error instanceof Error) {
+      console.log(error.message);
+      res.status(400).json({ success: false, message: error.message });
+    } else {
+      res
+        .status(400)
+        .json({ success: false, message: "An unknown error occurred" });
+    }
   }
 }
